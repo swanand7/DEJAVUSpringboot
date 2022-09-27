@@ -52,6 +52,7 @@ public final class AudioController {
 		String message = "Uploaded the file for fingerprinting successfully: " + file.getOriginalFilename();
 		System.out.println(message);
 		try {
+			System.out.println("Starting script for fingerprinting");
 			Process proc = Runtime.getRuntime().exec("/home/ubuntu/fingerprint.sh /"); // Whatever you want to execute
 			BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 			try {
@@ -75,6 +76,7 @@ public final class AudioController {
 		String message = "Uploaded the file for varification successfully: " + file.getOriginalFilename();
 		System.out.println(message);
 		try {
+			System.out.println("Starting script for Varify");
 			Process proc = Runtime.getRuntime().exec("/home/ubuntu/varify.sh /"); // Whatever you want to execute
 			BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 			try {
