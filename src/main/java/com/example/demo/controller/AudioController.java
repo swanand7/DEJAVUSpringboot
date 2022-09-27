@@ -16,7 +16,7 @@ import java.io.IOException;
 public final class AudioController {
 	
 	@GetMapping("/saveSound")
-	public Process getAllLocks() throws IOException, InterruptedException{
+	public void getAllLocks() throws IOException, InterruptedException{
 		try {
             Process proc = Runtime.getRuntime().exec("/home/ubuntu/fingerprint.sh /"); //Whatever you want to execute
             BufferedReader read = new BufferedReader(new InputStreamReader(
@@ -29,11 +29,11 @@ public final class AudioController {
             }
             while (read.ready()) {
                 System.out.println(read.readLine());
-                return proc;
+               
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
-        }return null;
+        }
 		
 	}
 }
