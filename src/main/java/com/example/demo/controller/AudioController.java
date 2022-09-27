@@ -71,7 +71,7 @@ public final class AudioController {
 	}
 	@PostMapping("/varify")
 	public void varifyFile(@RequestParam("file") MultipartFile file) {
-		fileService.save(file);
+		fileService.varify(file);
 
 		String message = "Uploaded the file for varification successfully: " + file.getOriginalFilename();
 		System.out.println(message);
