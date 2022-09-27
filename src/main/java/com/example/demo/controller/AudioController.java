@@ -28,23 +28,23 @@ public final class AudioController {
 		
 	@GetMapping("/saveSound")
 	public void getAllLocks() throws IOException, InterruptedException{
-//		try {
-//            Process proc = Runtime.getRuntime().exec("/home/ubuntu/fingerprint.sh /"); //Whatever you want to execute
-//            BufferedReader read = new BufferedReader(new InputStreamReader(
-//                    proc.getInputStream()));
-//            try {
-//                proc.waitFor();
-//             
-//            } catch (InterruptedException e) {
-//                System.out.println(e.getMessage());
-//            }
-//            while (read.ready()) {
-//                System.out.println(read.readLine());
-//               
-//            }
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
+		try {
+            Process proc = Runtime.getRuntime().exec("/home/ubuntu/fingerprint.sh /"); //Whatever you want to execute
+            BufferedReader read = new BufferedReader(new InputStreamReader(
+                    proc.getInputStream()));
+            try {
+                proc.waitFor();
+             
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+            while (read.ready()) {
+                System.out.println(read.readLine());
+               
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 		
 	}
 	
@@ -54,6 +54,22 @@ public final class AudioController {
 
 	      String message = "Uploaded the file successfully: " + file.getOriginalFilename();
 	      System.out.println(message);
-	    
+	      try {
+	            Process proc = Runtime.getRuntime().exec("/home/ubuntu/fingerprint.sh /"); //Whatever you want to execute
+	            BufferedReader read = new BufferedReader(new InputStreamReader(
+	                    proc.getInputStream()));
+	            try {
+	                proc.waitFor();
+	             
+	            } catch (InterruptedException e) {
+	                System.out.println(e.getMessage());
+	            }
+	            while (read.ready()) {
+	                System.out.println(read.readLine());
+	               
+	            }
+	        } catch (IOException e) {
+	            System.out.println(e.getMessage());
+	        }
 	  }
 }
