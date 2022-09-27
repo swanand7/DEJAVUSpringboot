@@ -21,16 +21,17 @@ public final class AudioController {
 		String command = "/home/ubuntu/fingerprint.sh";
 
         Process proc = Runtime.getRuntime().exec(command);
+        System.out.println("done");
 
-        // Read the output
-
-        BufferedReader reader =  
-              new BufferedReader(new InputStreamReader(proc.getInputStream()));
-
-        String line = "";
-        while((line = reader.readLine()) != null) {
-            System.out.print(line + "\n");
-        }
+//        // Read the output
+//
+//        BufferedReader reader =  
+//              new BufferedReader(new InputStreamReader(proc.getInputStream()));
+//
+//        String line = "";
+//        while((line = reader.readLine()) != null) {
+//            System.out.print(line + "\n");
+//        }
 
         proc.waitFor(); 
         return proc;
