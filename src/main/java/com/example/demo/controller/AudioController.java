@@ -18,7 +18,7 @@ public final class AudioController {
 	@GetMapping("/saveSound")
 	public Process getAllLocks() throws IOException, InterruptedException{
 		
-		String command = "cd /home/ubuntu/mp3 panako query 2.mp3";
+		String command = "/home/ubuntu/fingerprint.sh";
 
         Process proc = Runtime.getRuntime().exec(command);
 
