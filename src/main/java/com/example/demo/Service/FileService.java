@@ -6,4 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface FileService {
 	public void save(MultipartFile file);
+	
+	public void varify(MultipartFile file);
 }
