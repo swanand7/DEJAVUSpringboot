@@ -17,12 +17,18 @@ import com.example.demo.Service.FileService;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 @CrossOrigin(origins = "*", maxAge = 3600)
 public final class AudioController {
 
 	@Autowired
 	FileService fileService;
+	
+	@GetMapping("/")
+	public String baseApi() {
+		return "Application working";
+		
+	}
 
 	@GetMapping("/saveSound")
 	public void getAllLocks() throws IOException, InterruptedException {
