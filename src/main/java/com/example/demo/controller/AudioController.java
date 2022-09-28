@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -76,15 +77,20 @@ public final class AudioController {
 		}
 	}
 	@PostMapping("/varify")
-	public void varifyFile(@RequestParam("file") MultipartFile file) {
+	public String varifyFile(@RequestParam("file") MultipartFile file) {
 		fileService.varify(file);
 
 		String message = "Uploaded the file for varification successfully: " + file.getOriginalFilename();
 		System.out.println(message);
+		String s=new String();
 		try {
 			System.out.println("Starting script for Varify");
 			Process proc = Runtime.getRuntime().exec("/home/ubuntu/varify.sh /"); // Whatever you want to execute
 			BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+			s=read.lines().collect(Collectors.joining());
+			System.out.println(s);
+			
+			//JsonObject json = new JsonObject(message);
 			try {
 				proc.waitFor();
 
@@ -93,10 +99,12 @@ public final class AudioController {
 			}
 			while (read.ready()) {
 				System.out.println(read.readLine());
+				return s;
 
 			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}System.out.println("Varification done");
+		return s;
 	}
 }
