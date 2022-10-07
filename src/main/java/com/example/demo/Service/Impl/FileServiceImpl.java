@@ -20,6 +20,7 @@ import com.example.demo.constants.ScriptFilesConstant;
 import com.example.demo.entity.FingerprintEntity;
 import com.example.demo.model.ResultModel;
 import com.example.demo.repo.FingerprintRepo;
+import com.example.demo.response.LibraryResponse;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -124,6 +125,23 @@ public class FileServiceImpl implements FileService {
 		audio.setFileSize(file.getSize());
 		fingerprintRepo.save(audio);
 
+	}
+
+	@Override
+	public List<LibraryResponse> getAllRecording() {
+		List<FingerprintEntity>fingerprints= fingerprintRepo.findAll();
+		List<LibraryResponse> list=new ArrayList<>();
+		for(FingerprintEntity i:fingerprints) {
+			LibraryResponse response=new LibraryResponse();
+			response.setId(i.getId());
+			response.setFileName(i.getFileName());
+			response.setFileSize(i.getFileSize());
+			response.setData(i.getData());
+			response.setFileType(i.getFileType());
+			response.setDate(i.getDate());
+			list.add(response);
+		}
+		return list;
 	}
 
 }

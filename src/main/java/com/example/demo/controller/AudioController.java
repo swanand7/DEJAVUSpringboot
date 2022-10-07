@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.Service.FileService;
+import com.example.demo.response.LibraryResponse;
 
 import java.io.IOException;
 
@@ -62,7 +64,7 @@ public final class AudioController {
 	@PostMapping("/verify")
 	public void varifyFile(@RequestParam("file") MultipartFile file) {
 		fileService.verifyFingerprint(file);
-
+		
 //		String message = "Uploaded the file for varification successfully: " + file.getOriginalFilename();
 //		System.out.println(message);
 //		try {
@@ -87,5 +89,10 @@ public final class AudioController {
 //			System.out.println(e.getMessage());
 //		}
 //		System.out.println("Varification done");
+	}
+	@GetMapping("/library")
+	public ResponseEntity<List<LibraryResponse>> getAllAudio() {
+		return new ResponseEntity<List<LibraryResponse>>(fileService.getAllRecording(),HttpStatus.OK);
+		
 	}
 }
