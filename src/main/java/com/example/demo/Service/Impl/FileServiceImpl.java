@@ -44,9 +44,9 @@ public class FileServiceImpl implements FileService {
 		} catch (Exception e) {
 			throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
 		}
-		runScript(true);
+		String output=runScript(true);
 		saveAudio(file);
-		return "fingerprint created successfully for " + file.getOriginalFilename();
+		return output;
 
 	}
 
