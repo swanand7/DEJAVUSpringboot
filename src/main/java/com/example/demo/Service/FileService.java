@@ -15,4 +15,6 @@ public interface FileService {
 	public void verifyFingerprint(MultipartFile file);
 
 	public List<LibraryResponse> getAllRecording();
+
+	public byte[] getAudio(Integer id) throws IOException;
 }

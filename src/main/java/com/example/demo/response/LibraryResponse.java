@@ -9,7 +9,6 @@ public class LibraryResponse {
 	private String fileName;
 	private String fileType;
 	private long fileSize;
-	private byte[] data;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime Date;
 	public int getId() {
@@ -35,12 +34,6 @@ public class LibraryResponse {
 	}
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
-	}
-	public byte[] getData() {
-		return data;
-	}
-	public void setData(byte[] data) {
-		this.data = data;
 	}
 	public LocalDateTime getDate() {
 		return Date;

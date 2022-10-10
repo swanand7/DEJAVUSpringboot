@@ -1,15 +1,15 @@
 package com.example.demo.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.Service.FileService;
 import com.example.demo.response.LibraryResponse;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping
@@ -35,64 +33,28 @@ public final class AudioController {
 
 	}
 
-//	@GetMapping("/saveSound")
-//	public void getAllLocks() throws IOException, InterruptedException {
-//		try {
-//			Process proc = Runtime.getRuntime().exec("/home/ubuntu/fingerprint.sh /"); // Whatever you want to execute
-//			BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-//			try {
-//				proc.waitFor();
-//
-//			} catch (InterruptedException e) {
-//				System.out.println(e.getMessage());
-//			}
-//			while (read.ready()) {
-//				System.out.println(read.readLine());
-//
-//			}
-//		} catch (IOException e) {
-//			System.out.println(e.getMessage());
-//		}
-//
-//	}
-
 	@PostMapping("/upload")
 	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
-		return new ResponseEntity<String>(fileService.createFingerprint(file),HttpStatus.OK);
+		return new ResponseEntity<String>(fileService.createFingerprint(file), HttpStatus.OK);
 	}
 
 	@PostMapping("/verify")
 	public void varifyFile(@RequestParam("file") MultipartFile file) {
 		fileService.verifyFingerprint(file);
-		
-//		String message = "Uploaded the file for varification successfully: " + file.getOriginalFilename();
-//		System.out.println(message);
-//		try {
-//			System.out.println("Starting script for Varify");
-//			Process proc = Runtime.getRuntime().exec("/home/ubuntu/varify.sh /"); // Whatever you want to execute
-//			BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-//			String s = read.lines().collect(Collectors.joining());
-//			System.out.println(s);
-//
-//			// JsonObject json = new JsonObject(message);
-//			try {
-//				proc.waitFor();
-//
-//			} catch (InterruptedException e) {
-//				System.out.println(e.getMessage());
-//			}
-//			while (read.ready()) {
-//				System.out.println(read.readLine());
-//
-//			}
-//		} catch (IOException e) {
-//			System.out.println(e.getMessage());
-//		}
-//		System.out.println("Varification done");
+
 	}
+
 	@GetMapping("/library")
 	public ResponseEntity<List<LibraryResponse>> getAllAudio() {
-		return new ResponseEntity<List<LibraryResponse>>(fileService.getAllRecording(),HttpStatus.OK);
-		
+		return new ResponseEntity<List<LibraryResponse>>(fileService.getAllRecording(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/library/{id}")
+	public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable Integer id) throws IOException {
+		byte []audioData=fileService.getAudio(id);
+		return ResponseEntity.status(HttpStatus.OK)
+				.contentType(MediaType.valueOf("wav/mp3/aac"))
+				.body(audioData);
+
 	}
 }

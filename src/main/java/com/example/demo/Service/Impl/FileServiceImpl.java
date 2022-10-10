@@ -1,6 +1,7 @@
 package com.example.demo.Service.Impl;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -9,6 +10,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ public class FileServiceImpl implements FileService {
 
 	private final Path fingerprintPath = Paths.get("/home/ubuntu/mp3");
 	private final Path varifyPath = Paths.get("/home/ubuntu/test");
+	private final String FOLDER_PATH = "/home/ubuntu/mp3";
 
 	@Autowired
 	private FingerprintRepo fingerprintRepo;
@@ -34,8 +37,8 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public String createFingerprint(MultipartFile file) throws Exception {
 		// TODO Auto-generated method stub
-		if(fingerprintRepo.findByFileName(file.getOriginalFilename())!=null) {
-			return "Audio with tag "+file.getOriginalFilename()+" available!!";
+		if (fingerprintRepo.findByFileName(file.getOriginalFilename()) != null) {
+			return "Audio with tag " + file.getOriginalFilename() + " available!!";
 		}
 		try {
 			Files.copy(file.getInputStream(), this.fingerprintPath.resolve(file.getOriginalFilename()));
@@ -44,7 +47,7 @@ public class FileServiceImpl implements FileService {
 		} catch (Exception e) {
 			throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
 		}
-		String output=runScript(true);
+		String output = runScript(true);
 		saveAudio(file);
 		return output;
 
@@ -117,11 +120,13 @@ public class FileServiceImpl implements FileService {
 
 	private void saveAudio(MultipartFile file) throws IOException {
 		// TODO Auto-generated method stub
+		String filePath = FOLDER_PATH + file.getOriginalFilename();
+		// saveDB details
 		FingerprintEntity audio = new FingerprintEntity();
 		audio.setFileName(file.getOriginalFilename());
 		audio.setFileType(file.getContentType());
 		audio.setDate(LocalDateTime.now());
-		audio.setData(file.getBytes());
+		audio.setLocation(filePath);
 		audio.setFileSize(file.getSize());
 		fingerprintRepo.save(audio);
 
@@ -129,19 +134,26 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public List<LibraryResponse> getAllRecording() {
-		List<FingerprintEntity>fingerprints= fingerprintRepo.findAll();
-		List<LibraryResponse> list=new ArrayList<>();
-		for(FingerprintEntity i:fingerprints) {
-			LibraryResponse response=new LibraryResponse();
+		List<FingerprintEntity> fingerprints = fingerprintRepo.findAll();
+		List<LibraryResponse> list = new ArrayList<>();
+		for (FingerprintEntity i : fingerprints) {
+			LibraryResponse response = new LibraryResponse();
 			response.setId(i.getId());
 			response.setFileName(i.getFileName());
 			response.setFileSize(i.getFileSize());
-			response.setData(i.getData());
 			response.setFileType(i.getFileType());
 			response.setDate(i.getDate());
 			list.add(response);
 		}
 		return list;
+	}
+
+	@Override
+	public byte[] getAudio(Integer id) throws IOException {
+		 Optional<FingerprintEntity>fingerprint= fingerprintRepo.findById(id);
+		 String filePath=fingerprint.get().getLocation();
+		 return Files.readAllBytes(new File(filePath).toPath());
+		 
 	}
 
 }

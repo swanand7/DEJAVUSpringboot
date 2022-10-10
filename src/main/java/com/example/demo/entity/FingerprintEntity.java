@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,8 +21,7 @@ public class FingerprintEntity {
 	private String fileName;
 	private String fileType;
 	private long fileSize;
-	@Lob
-	private byte[] data;
+	private String location;
 
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "date")
@@ -61,14 +59,6 @@ public class FingerprintEntity {
 		this.fileSize = fileSize;
 	}
 
-	public byte[] getData() {
-		return data;
-	}
-
-	public void setData(byte[] data) {
-		this.data = data;
-	}
-
 	public LocalDateTime getDate() {
 		return Date;
 	}
@@ -76,5 +66,14 @@ public class FingerprintEntity {
 	public void setDate(LocalDateTime date) {
 		Date = date;
 	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
 
 }
