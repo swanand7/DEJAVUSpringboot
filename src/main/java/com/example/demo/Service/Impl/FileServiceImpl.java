@@ -1,7 +1,6 @@
 package com.example.demo.Service.Impl;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -149,10 +148,10 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public byte[] getAudio(Integer id) throws IOException {
+	public FingerprintEntity getAudio(Integer id) throws IOException {
 		 Optional<FingerprintEntity>fingerprint= fingerprintRepo.findById(id);
-		 String filePath=fingerprint.get().getLocation();
-		 return Files.readAllBytes(new File(filePath).toPath());
+		// String filePath=fingerprint.get().getLocation();
+		 return fingerprint.orElse(null);
 		 
 	}
 

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.entity.FingerprintEntity;
 import com.example.demo.response.LibraryResponse;
 
 @Service
@@ -16,5 +17,5 @@ public interface FileService {
 
 	public List<LibraryResponse> getAllRecording();
 
-	public byte[] getAudio(Integer id) throws IOException;
+	public FingerprintEntity getAudio(Integer id) throws IOException;
 }
