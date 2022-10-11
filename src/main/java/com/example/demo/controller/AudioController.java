@@ -53,7 +53,7 @@ public final class AudioController {
 	public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable Integer id) throws IOException {
 		byte []audioData=fileService.getAudio(id);
 		return ResponseEntity.status(HttpStatus.OK)
-				.contentType(MediaType.valueOf("wav/mp3/aac"))
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.body(audioData);
 
 	}
