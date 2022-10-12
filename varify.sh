@@ -1,3 +1,3 @@
-cd /home/ubuntu/DEJAVUSpringboot/test
+cd /home/ubuntu/test
 panako query *
-sudo rm -rf /home/ubuntu/DEJAVUSpringboot/test/*
+sudo rm -rf /home/ubuntu/test/*

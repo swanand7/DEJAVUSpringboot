@@ -1,2 +1,2 @@
-cd /home/ubuntu/DEJAVUSpringboot/mp3
+cd /home/ubuntu/mp3
 panako store *
