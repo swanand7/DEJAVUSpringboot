@@ -29,7 +29,7 @@ public final class AudioController {
 
 	@Autowired
 	FileService fileService;
-	private final String FOLDER_PATH = "/home/ubuntu/DEJAVUSpringboot/mp3/";
+	private final String FOLDER_PATH = "/home/ubuntu/mp3/";
 
 	@GetMapping("/")
 	public String baseApi() {
