@@ -26,9 +26,9 @@ import com.example.demo.response.LibraryResponse;
 @Service
 public class FileServiceImpl implements FileService {
 
-	private final Path fingerprintPath = Paths.get("/home/ubuntu/mp3");
-	private final Path varifyPath = Paths.get("/home/ubuntu/test");
-	private final String FOLDER_PATH = "/home/ubuntu/mp3/";
+	private final Path fingerprintPath = Paths.get("/home/ubuntu/DEJAVUSpringboot/mp3");
+	private final Path varifyPath = Paths.get("/home/ubuntu/DEJAVUSpringboot/test");
+	private final String FOLDER_PATH = "/home/ubuntu/DEJAVUSpringboot/mp3/";
 
 	@Autowired
 	private FingerprintRepo fingerprintRepo;
