@@ -1,12 +1,16 @@
 package com.example.demo.controller;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,17 +65,17 @@ public final class AudioController {
 //				.body(audioData);
 //
 //	}
-//	@GetMapping("/library/{id}")
-//	public ResponseEntity<Resource> downloadImageFromFileSystem(@PathVariable Integer id) throws IOException {
-//		FingerprintEntity fingerprintEntity=fileService.getAudio(id);
-//		String filePath=FOLDER_PATH+fingerprintEntity.getFileName();
-//		byte []audioData= Files.readAllBytes(new File(filePath).toPath());
-//		return ResponseEntity.ok()
-//				.contentType(MediaType.parseMediaType(fingerprintEntity.getFileType()))
-//				.header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "fingerprintEntity; filename=\""+fingerprintEntity.getFileName()+"\"")
-//				.body(new ByteArrayResource(audioData));
-//
-//	}
+	@GetMapping("/library1/{id}")
+	public ResponseEntity<Resource> downloadImageFromFileSystem1(@PathVariable Integer id) throws IOException {
+		FingerprintEntity fingerprintEntity=fileService.getAudio(id);
+		String filePath=FOLDER_PATH+fingerprintEntity.getFileName();
+		byte []audioData= Files.readAllBytes(new File(filePath).toPath());
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(fingerprintEntity.getFileType()))
+				.header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "fingerprintEntity; filename=\""+fingerprintEntity.getFileName()+"\"")
+				.body(new ByteArrayResource(audioData));
+
+	}
 	@GetMapping("/library/{id}")
 	public ResponseEntity<AudioResponse> downloadImageFromFileSystem(@PathVariable Integer id) throws IOException {
 		FingerprintEntity fingerprintEntity=fileService.getAudio(id);
