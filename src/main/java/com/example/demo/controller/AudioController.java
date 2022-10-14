@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.Service.FileService;
 import com.example.demo.entity.FingerprintEntity;
+import com.example.demo.model.ResultModel;
 import com.example.demo.response.AudioResponse;
 import com.example.demo.response.LibraryResponse;
 
@@ -42,13 +43,13 @@ public final class AudioController {
 	}
 
 	@PostMapping("/upload")
-	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
-		return new ResponseEntity<String>(fileService.createFingerprint(file), HttpStatus.OK);
+	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("length") String length) throws Exception {
+		return new ResponseEntity<String>(fileService.createFingerprint(file,length), HttpStatus.OK);
 	}
 
 	@PostMapping("/verify")
-	public void varifyFile(@RequestParam("file") MultipartFile file) {
-		fileService.verifyFingerprint(file);
+	public ResponseEntity<List<ResultModel>> varifyFile(@RequestParam("file") MultipartFile file) {
+		return new ResponseEntity<List<ResultModel>>(fileService.verifyFingerprint(file),HttpStatus.OK);
 
 	}
 

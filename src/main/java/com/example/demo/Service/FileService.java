@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.FingerprintEntity;
+import com.example.demo.model.ResultModel;
 import com.example.demo.response.LibraryResponse;
 
 @Service
 public interface FileService {
-	public String createFingerprint(MultipartFile file) throws IOException, Exception;
+	public String createFingerprint(MultipartFile file, String length) throws IOException, Exception;
 	
-	public void verifyFingerprint(MultipartFile file);
+	public List<ResultModel> verifyFingerprint(MultipartFile file);
 
 	public List<LibraryResponse> getAllRecording();
 

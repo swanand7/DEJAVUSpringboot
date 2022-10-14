@@ -21,6 +21,7 @@ public class FingerprintEntity {
 	private String fileName;
 	private String fileType;
 	private long fileSize;
+	private String length;
 	private String location;
 
 	@JsonFormat(pattern = "yyyy-MM-dd")
@@ -74,6 +75,15 @@ public class FingerprintEntity {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
+	public String getLength() {
+		return length;
+	}
+
+	public void setLength(String length) {
+		this.length = length;
+	}
+	
 	
 
 }

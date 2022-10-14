@@ -34,7 +34,7 @@ public class FileServiceImpl implements FileService {
 	private FingerprintRepo fingerprintRepo;
 
 	@Override
-	public String createFingerprint(MultipartFile file) throws Exception {
+	public String createFingerprint(MultipartFile file,String length) throws Exception {
 		// TODO Auto-generated method stub
 		if (fingerprintRepo.findByFileName(file.getOriginalFilename()) != null) {
 			return "Audio with tag " + file.getOriginalFilename() + " available!!";
@@ -47,23 +47,23 @@ public class FileServiceImpl implements FileService {
 			throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
 		}
 		String output = runScript(true);
-		saveAudio(file);
+		saveAudio(file,length);
 		return output;
 
 	}
 
 	@Override
-	public void verifyFingerprint(MultipartFile file) {
+	public List<ResultModel> verifyFingerprint(MultipartFile file) {
 		// TODO Auto-generated method stub
 		try {
 			Files.copy(file.getInputStream(), this.varifyPath.resolve(file.getOriginalFilename()));
 		} catch (Exception e) {
 			throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
 		}
-		processOutput(runScript(false).substring(189));
+		return processOutput(runScript(false).substring(189));
 	}
 
-	private void processOutput(String output) {
+	private List<ResultModel> processOutput(String output) {
 		String[] arr = output.split("; ");
 		List<ResultModel> list = new ArrayList<ResultModel>();
 		int chunk = 12;
@@ -83,9 +83,7 @@ public class FileServiceImpl implements FileService {
 			r.setMatchPercent(arr[i + 11]);
 			list.add(r);
 		}
-		for (ResultModel i : list) {
-			System.out.println(i);
-		}
+		return list;
 	}
 
 	private String runScript(Boolean isFingerprint) {
@@ -117,7 +115,7 @@ public class FileServiceImpl implements FileService {
 		return output;
 	}
 
-	private void saveAudio(MultipartFile file) throws IOException {
+	private void saveAudio(MultipartFile file, String length) throws IOException {
 		// TODO Auto-generated method stub
 		String filePath = FOLDER_PATH + file.getOriginalFilename();
 		// saveDB details
@@ -127,6 +125,7 @@ public class FileServiceImpl implements FileService {
 		audio.setDate(LocalDateTime.now());
 		audio.setLocation(filePath);
 		audio.setFileSize(file.getSize());
+		audio.setLength(length);
 		fingerprintRepo.save(audio);
 
 	}
@@ -142,6 +141,7 @@ public class FileServiceImpl implements FileService {
 			response.setFileSize(i.getFileSize());
 			response.setFileType(i.getFileType());
 			response.setDate(i.getDate());
+			response.setLength(i.getLength());
 			list.add(response);
 		}
 		return list;
