@@ -54,9 +54,11 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public List<ResultModel> verifyFingerprint(MultipartFile file) {
+		System.out.println("file uploaded to application"+ LocalDateTime.now());
 		// TODO Auto-generated method stub
 		try {
 			Files.copy(file.getInputStream(), this.varifyPath.resolve(file.getOriginalFilename()));
+			System.out.println("file uploaded to folder"+LocalDateTime.now());
 		} catch (Exception e) {
 			throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
 		}
@@ -64,6 +66,7 @@ public class FileServiceImpl implements FileService {
 	}
 
 	private List<ResultModel> processOutput(String output) {
+		System.out.println("Output Processing stared" +LocalDateTime.now());
 		String[] arr = output.split("; ");
 		List<ResultModel> list = new ArrayList<ResultModel>();
 		int chunk = 12;
@@ -90,7 +93,7 @@ public class FileServiceImpl implements FileService {
 		// TODO Auto-generated method stub
 		String output = "";
 		try {
-			System.out.println("Starting script for fingerprinting");
+			System.out.println("Starting script for fingerprinting" +LocalDateTime.now()+ isFingerprint);
 			Process proc;
 			if (isFingerprint) {
 				proc = Runtime.getRuntime().exec(ScriptFilesConstant.fingerPrint); // Whatever you want to
@@ -112,6 +115,7 @@ public class FileServiceImpl implements FileService {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
+		System.out.println("end script for fingerprinting" +LocalDateTime.now());
 		return output;
 	}
 
