@@ -71,8 +71,6 @@ public final class AudioController {
 	public ResponseEntity<Resource> downloadImageFromFileSystem1(@PathVariable Integer id) throws IOException {
 		FingerprintEntity fingerprintEntity=fileService.getAudio(id);
 		String filePath=LIBRARY_PATH+fingerprintEntity.getFileName();
-		System.out.println(filePath+"<-");
-		System.out.println(fingerprintEntity.getLocation()+"<-");
 		byte []audioData= Files.readAllBytes(new File(filePath).toPath());
 		return ResponseEntity.ok()
 				.contentType(MediaType.parseMediaType(fingerprintEntity.getFileType()))
