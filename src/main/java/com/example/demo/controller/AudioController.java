@@ -35,6 +35,7 @@ public final class AudioController {
 	@Autowired
 	FileService fileService;
 	private final String FOLDER_PATH = "/home/ubuntu/mp3/";
+	private final String LIBRARY_PATH= "/home/ubuntu/library/";
 
 	@GetMapping("/")
 	public String baseApi() {
@@ -69,7 +70,7 @@ public final class AudioController {
 	@GetMapping("/library1/{id}")
 	public ResponseEntity<Resource> downloadImageFromFileSystem1(@PathVariable Integer id) throws IOException {
 		FingerprintEntity fingerprintEntity=fileService.getAudio(id);
-		String filePath=FOLDER_PATH+fingerprintEntity.getFileName();
+		String filePath=LIBRARY_PATH+fingerprintEntity.getFileName();
 		byte []audioData= Files.readAllBytes(new File(filePath).toPath());
 		return ResponseEntity.ok()
 				.contentType(MediaType.parseMediaType(fingerprintEntity.getFileType()))

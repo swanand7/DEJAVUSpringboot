@@ -28,6 +28,7 @@ public class FileServiceImpl implements FileService {
 
 	private final Path fingerprintPath = Paths.get("/home/ubuntu/mp3");
 	private final Path varifyPath = Paths.get("/home/ubuntu/test");
+	private final Path libraryPath =Paths.get("/home/ubuntu/test");
 	private final String FOLDER_PATH = "/home/ubuntu/mp3/";
 
 	@Autowired
@@ -41,8 +42,9 @@ public class FileServiceImpl implements FileService {
 		}
 		try {
 			Files.copy(file.getInputStream(), this.fingerprintPath.resolve(file.getOriginalFilename()));
+			Files.copy(file.getInputStream(), this.libraryPath.resolve(file.getOriginalFilename()));
 			String message = "Uploaded the file for fingerprinting successfully: " + file.getOriginalFilename();
-			System.out.println(message);
+			System.out.println(message+LocalDateTime.now());
 		} catch (Exception e) {
 			throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
 		}
