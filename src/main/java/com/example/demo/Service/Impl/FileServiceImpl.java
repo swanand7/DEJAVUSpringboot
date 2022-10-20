@@ -28,7 +28,7 @@ public class FileServiceImpl implements FileService {
 
 	private final Path fingerprintPath = Paths.get("/home/ubuntu/mp3");
 	private final Path varifyPath = Paths.get("/home/ubuntu/test");
-	private final Path libraryPath =Paths.get("/home/ubuntu/test");
+	private final Path libraryPath =Paths.get("/home/ubuntu/library/");
 	private final String FOLDER_PATH = "/home/ubuntu/mp3/";
 
 	@Autowired
@@ -123,7 +123,7 @@ public class FileServiceImpl implements FileService {
 
 	private void saveAudio(MultipartFile file, String length) throws IOException {
 		// TODO Auto-generated method stub
-		String filePath = FOLDER_PATH + file.getOriginalFilename();
+		String filePath = libraryPath+ file.getOriginalFilename();
 		// saveDB details
 		FingerprintEntity audio = new FingerprintEntity();
 		audio.setFileName(file.getOriginalFilename());
