@@ -38,7 +38,7 @@ public class FileServiceImpl implements FileService {
 	public String createFingerprint(MultipartFile file,String length) throws Exception {
 		// TODO Auto-generated method stub
 		if (fingerprintRepo.findByFileName(file.getOriginalFilename()) != null) {
-			return "Audio with tag " + file.getOriginalFilename() + " available!!";
+			return "File with " + file.getOriginalFilename() + " already exists in the library. Please use different name.";
 		}
 		try {
 			Files.copy(file.getInputStream(), this.fingerprintPath.resolve(file.getOriginalFilename()));
