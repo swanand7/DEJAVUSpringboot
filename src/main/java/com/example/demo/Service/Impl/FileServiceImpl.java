@@ -1,6 +1,7 @@
 package com.example.demo.Service.Impl;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -29,7 +30,6 @@ public class FileServiceImpl implements FileService {
 	private final Path fingerprintPath = Paths.get("/home/ubuntu/mp3");
 	private final Path varifyPath = Paths.get("/home/ubuntu/test");
 	private final Path libraryPath =Paths.get("/home/ubuntu/library/");
-	private final String FOLDER_PATH = "/home/ubuntu/mp3/";
 
 	@Autowired
 	private FingerprintRepo fingerprintRepo;
@@ -159,6 +159,26 @@ public class FileServiceImpl implements FileService {
 		// String filePath=fingerprint.get().getLocation();
 		 return fingerprint.orElse(null);
 		 
+	}
+
+	@Override
+	public String deleteFromLibrary(List<String> audioNames) {
+		// TODO Auto-generated method stub
+		fingerprintRepo.deleteByIdIn(audioNames);
+		for(String i:audioNames) {
+			deletFileFromFolder(i);
+		}
+		return "Files removed successfully";
+	}
+
+	private void deletFileFromFolder(String audio) {
+		File f= new File(libraryPath+audio);
+		try {
+		    java.lang.Runtime.getRuntime().exec("rm -f " + f.getAbsolutePath());
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}  
+		
 	}
 
 }

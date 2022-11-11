@@ -19,4 +19,6 @@ public interface FileService {
 	public List<LibraryResponse> getAllRecording();
 
 	public FingerprintEntity getAudio(Integer id) throws IOException;
+
+	public String deleteFromLibrary(List<String> songIds);
 }

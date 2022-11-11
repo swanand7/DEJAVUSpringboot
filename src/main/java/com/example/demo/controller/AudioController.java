@@ -4,6 +4,7 @@ import java.io.File;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,6 +89,11 @@ public final class AudioController {
 		response.setFile(audioData);
 		return new ResponseEntity<AudioResponse>(response, HttpStatus.OK);
 
+	}
+	
+	@PostMapping("/delete")
+	public ResponseEntity<String> deleteSongsFromLibrary(@RequestBody ArrayList<String> audioNames){
+		return new ResponseEntity<String>(fileService.deleteFromLibrary(audioNames),HttpStatus.OK);
 	}
 
 }
