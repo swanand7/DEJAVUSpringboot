@@ -172,9 +172,10 @@ public class FileServiceImpl implements FileService {
 	}
 
 	private void deletFileFromFolder(String audio) {
-		File f= new File(libraryPath+audio);
+		File f= new File(libraryPath+"/"+audio);
 		try {
-		    java.lang.Runtime.getRuntime().exec("rm -f " + f.getAbsolutePath());
+			System.out.println("deleting "+f);
+		    System.out.println(java.lang.Runtime.getRuntime().exec("rm -f " + f.getAbsolutePath()));
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}  
